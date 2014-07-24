@@ -9,8 +9,8 @@ Funzioni implementate:
 * start/stop istanza
 * deploy
 * creazione di un server group
-* creazione di un istanza
-* creazione e copia nel domain controller di un domain.xml partendo da template (crea un profilo duplicando full*ha, si possono aggiungere profili a piacere)
+* creazione di un'istanza
+* creazione e copia nel domain controller di un domain.xml partendo da template (crea un profilo duplicando full-ha, si possono aggiungere profili a piacere)
 * set Jvm opts su una server group
 * set jvm opts su una istanza
 * check connessione datasource configurato
