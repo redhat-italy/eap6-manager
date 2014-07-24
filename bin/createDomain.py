@@ -1,10 +1,12 @@
 #!/usr/bin/python
 
-from ValueUtils import ValueUtils
 import os
 import sys
 from copy import deepcopy
+
 from Propertymanager import PropertyManager
+from utils import ValueUtils
+
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 

@@ -1,13 +1,14 @@
+from base import BaseCommand
+from base import EapManagerException
+from utils import ValueUtils, FindUtils
+
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
-from BaseCommand import BaseCommand
 from sys import stdout as console
-from FindUtils import FindUtils
 import subprocess
 from subprocess import CalledProcessError
-from EapManagerException import EapManagerException
-from Propertymanager import PropertyManager
-from ValueUtils import ValueUtils
+from utils.Propertymanager import PropertyManager
+
 
 class CreateInstanceCommand(BaseCommand):
     _prompt = "startinstance >"
@@ -28,7 +29,7 @@ class CreateInstanceCommand(BaseCommand):
             self.sendCommand(jbossHome,controller,user,password, domain, cluster,hostcontroller,instanceName,offset)
 
 
-        except (CalledProcessError,EapManagerException) as e:
+        except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 

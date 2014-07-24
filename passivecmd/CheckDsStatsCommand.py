@@ -1,35 +1,39 @@
-from BaseCommand import BaseCommand
 from sys import stdout as console
-from FindUtils import FindUtils
 import subprocess
 import time
-from ValueUtils import ValueUtils
 from subprocess import CalledProcessError
-from EapManagerException import EapManagerException
+
+from utils import FindUtils
+from base import BaseCommand
+from base import EapManagerException
+from utils import ValueUtils
+
 
 __author__ = "Samuele Dell'Angelo (Red HAt)"
 
-class CheckThreadStatsCommand(BaseCommand):
+class CheckDSStatsCommand(BaseCommand):
     _prompt = "startinstance >"
 
     def execute(self, jbossHome, controller, user, password):
         self.fillParameters(jbossHome, controller, user, password)
         print chr(27) + "[2J"
         console.flush()
-        print("hai chiamato check Thread statistics")
+        print("hai chiamato check Datasource statistics")
 
         try:
             domain = FindUtils.getDomain("domains")
             cluster = FindUtils.getCluster(domain)
             instanceTuple = FindUtils.getInstance(domain,cluster)
+            datasource = FindUtils.getGenericString("inserire il nome del datasource >")
             pollNumb =  FindUtils.getGenericString("inserire il numero di poll >")
             pollInterval =  FindUtils.getGenericString("inserire il polling interval (sec) >")
-            startCommand ='"/host='+instanceTuple[1]+'/server='+instanceTuple[0]+'/core-service=platform-mbean/type=threading:read-resource"'
+            print("Check Datasource Statistics: "+datasource)
+            startCommand ='"/host='+instanceTuple[1]+'/server='+instanceTuple[0]+'/subsystem=datasources/data-source='+datasource+'/statistics=pool:read-resource(include-runtime=true)"'
             if(pollInterval != None) and (pollNumb != None):
 
                 pollNumb = int(pollNumb)
                 pollInterval = int(pollInterval)
-                print("Current Threads Count | Peak Thread Count | Daemon Thread Count ")
+                print("Available Connections | Created Connections | In use Connections | Active Connections | Max used Connections")
                 for i in range(pollNumb):
                     psCons = subprocess.Popen(self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+startCommand, shell=True, stdout=subprocess.PIPE)
                     output = psCons.stdout.read()
@@ -38,13 +42,14 @@ class CheckThreadStatsCommand(BaseCommand):
 
                     statsDict = ValueUtils.parseCliOutput(output)
 
-                    print(statsDict['thread-count']+" "+
-                          "                  |"+statsDict['peak-thread-count']+" "+
-                          "               |"+statsDict['daemon-thread-count']+" ")
-
+                    print(statsDict['AvailableCount']+" "+
+                          "                   |"+statsDict['CreatedCount']+" "+
+                          "                   |"+statsDict['InUseCount']+" "+
+                          "                  |"+statsDict['ActiveCount']+" "+
+                          "                  |"+statsDict['MaxUsedCount']+" ")
                     time.sleep(pollInterval)
 
-        except (CalledProcessError,EapManagerException, ValueError) as e:
+        except (CalledProcessError, EapManagerException, ValueError) as e:
             print(e.message)
             pass
 

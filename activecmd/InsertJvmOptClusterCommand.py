@@ -1,9 +1,11 @@
-from BaseCommand import BaseCommand
 from sys import stdout as console
-from FindUtils import FindUtils
 import subprocess
 from subprocess import CalledProcessError
-from EapManagerException import EapManagerException
+
+from base import BaseCommand
+from base import EapManagerException
+from utils import FindUtils
+
 
 __author__ = "Samuele Dell'Angelo (Red HAt)"
 
@@ -23,7 +25,7 @@ class InsertJvmOptClusterCommand(BaseCommand):
             self.sendCommand(jbossHome,controller,user,password, cluster, option)
 
 
-        except (CalledProcessError,EapManagerException) as e:
+        except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 

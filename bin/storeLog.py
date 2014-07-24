@@ -2,7 +2,9 @@
 import datetime
 import os
 import sys
-from Propertymanager import PropertyManager
+
+from utils.Propertymanager import PropertyManager
+
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 

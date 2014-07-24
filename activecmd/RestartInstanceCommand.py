@@ -1,13 +1,15 @@
-from BaseCommand import BaseCommand
 from sys import stdout as console
-from FindUtils import FindUtils
 import subprocess
 from subprocess import CalledProcessError
-from EapManagerException import EapManagerException
+
+from base import BaseCommand
+from base import EapManagerException
+from utils import FindUtils
+
 
 __author__ = "Samuele Dell'Angelo (Red HAt)"
 
-class CheckDSCommand(BaseCommand):
+class RestartInstanceCommand(BaseCommand):
     _prompt = "startinstance >"
 
     def execute(self, jbossHome, controller, user, password):
@@ -20,16 +22,16 @@ class CheckDSCommand(BaseCommand):
             domain = FindUtils.getDomain("domains")
             cluster = FindUtils.getCluster(domain)
             instanceTuple = FindUtils.getInstance(domain,cluster)
-            datasource = FindUtils.getGenericString("inserire il nome del datasource >")
-            print("Check Datasource: "+datasource)
 
-            startCommand =  "/host="+instanceTuple[1]+"/server="+instanceTuple[0]+"/subsystem=datasources/data-source="+datasource+":test-connection-in-pool"
+            print("Avvio cluster: "+cluster)
+
+            startCommand =  "/host="+instanceTuple[1]+"/server-config="+instanceTuple[0]+":restart"
 
             print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+startCommand)
 
             subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,startCommand])
 
-        except (CalledProcessError,EapManagerException) as e:
+        except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 

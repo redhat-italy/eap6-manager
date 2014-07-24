@@ -1,21 +1,20 @@
-from EapManagerException import EapManagerException
+from base import BaseCommand
+from base import EapManagerException
+from utils import FindUtils
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
-from BaseCommand import BaseCommand
-from FindUtils import FindUtils
 import subprocess
 from subprocess import CalledProcessError
 from sys import stdout as console
 
 
-class StopClusterCommand(BaseCommand):
+class StartClusterCommand(BaseCommand):
 
     def execute(self, jbossHome, controller, user, password):
-        self.fillParameters(jbossHome, controller, user, password)
         print chr(27) + "[2J"
         console.flush()
-        print("hai chiamato stopCluster")
+        print("hai chiamato startCluster")
 
         try:
             domain = FindUtils.getDomain("domains")
@@ -24,7 +23,7 @@ class StopClusterCommand(BaseCommand):
             print("Avvio cluster: "+cluster)
             self.sendCommand(jbossHome,controller,user,password,cluster)
 
-        except (CalledProcessError,EapManagerException) as e:
+        except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 
@@ -32,8 +31,9 @@ class StopClusterCommand(BaseCommand):
 
     def sendCommand(self, jbossHome, controller, user, password, cluster):
         self.fillParameters(jbossHome, controller, user, password)
-        startCommand =  "/server-group="+cluster+":stop-servers"
+        startCommand =  "/server-group="+cluster+":start-servers"
 
         print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+startCommand)
 
         subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,startCommand])
+

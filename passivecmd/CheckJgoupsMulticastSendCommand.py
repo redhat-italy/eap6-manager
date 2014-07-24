@@ -1,10 +1,12 @@
-from BaseCommand import BaseCommand
 from sys import stdout as console
-from FindUtils import FindUtils
 import subprocess
-from Propertymanager import PropertyManager
 from subprocess import CalledProcessError
-from EapManagerException import EapManagerException
+
+from utils import PropertyManager
+from base import BaseCommand
+from base import EapManagerException
+from utils import FindUtils
+
 
 __author__ = "Samuele Dell'Angelo (Red HAt)"
 
@@ -32,7 +34,7 @@ class CheckJgoupsMulticastSendCommand(BaseCommand):
 
 
 
-        except (CalledProcessError,EapManagerException, ValueError) as e:
+        except (CalledProcessError, EapManagerException, ValueError) as e:
             print(e.message)
             pass
 

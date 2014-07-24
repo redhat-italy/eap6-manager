@@ -1,13 +1,14 @@
+from base import BaseCommand
+from base import EapManagerException
+from utils import ValueUtils, FindUtils
+
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
-from BaseCommand import BaseCommand
-from FindUtils import FindUtils
 import subprocess
 from subprocess import CalledProcessError
 from sys import stdout as console
-from EapManagerException import EapManagerException
-from Propertymanager import PropertyManager
-from ValueUtils import ValueUtils
+from utils.Propertymanager import PropertyManager
+
 
 class CreateSGCommand(BaseCommand):
 
@@ -24,7 +25,7 @@ class CreateSGCommand(BaseCommand):
             print("Creo cluster: "+cluster)
             self.sendCommand(jbossHome,controller,user,password,cluster, domain, profile)
 
-        except (CalledProcessError,EapManagerException) as e:
+        except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 

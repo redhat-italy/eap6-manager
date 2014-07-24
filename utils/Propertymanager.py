@@ -9,6 +9,8 @@ class PropertyManager:
     
     def __init__(self, filename):
         dir=os.path.dirname(__file__)
+        #remove package dir
+        dir=dir[:dir.find(__name__.split('.')[0])]
         fpath=dir+"""/"""+filename
         fp = open(fpath,'r')
         splitLines = [string.split(line, '=') for line in fp.readlines() if "=" in line]

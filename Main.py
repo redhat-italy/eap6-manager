@@ -1,26 +1,18 @@
 #!/usr/bin/python
-import EapManagerException
+from activecmd import StartInstanceCommand, StopInstanceCommand, StartClusterCommand, DeployCommand, \
+    RestartClusterCommand, InsertJvmOptClusterCommand, CreateInstanceCommand, InsertJvmOptCommand, \
+    RestartInstanceCommand, StopClusterCommand
+from base import EapManagerException
+from passivecmd import CheckThreadStatsCommand, CheckJgoupsMulticastRecCommand, CheckJgoupsMulticastSendCommand, \
+    CheckHttpStatsCommand
+
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
-from Propertymanager import PropertyManager
-from StartClusterCommand import StartClusterCommand
-from StartInstanceCommand import StartInstanceCommand
-from StopClusterCommand import StopClusterCommand
-from RestartClusterCommand import RestartClusterCommand
-from StopInstanceCommand import StopInstanceCommand
-from RestartInstanceCommand import RestartInstanceCommand
-from DeployCommand import DeployCommand
-from CheckDsCommand import CheckDSCommand
-from createSGCommand import CreateSGCommand
-from CreateInstanceCommand import CreateInstanceCommand
-from InsertJvmOptCommand import InsertJvmOptCommand
-from InsertJvmOptClusterCommand import InsertJvmOptClusterCommand
-from CheckDsStatsCommand import CheckDSStatsCommand
-from CheckThreadStatsCommand import CheckThreadStatsCommand
-from CheckHttpStatsCommand import CheckHttpStatsCommand
-from CheckJgoupsMulticastRecCommand import CheckJgoupsMulticastRecCommand
-from CheckJgoupsMulticastSendCommand import CheckJgoupsMulticastSendCommand
+from utils.Propertymanager import PropertyManager
+from passivecmd.CheckDsCommand import CheckDSCommand
+from activecmd.CreateSGCommand import CreateSGCommand
+from passivecmd.CheckDsStatsCommand import CheckDSStatsCommand
 from sys import stdout as console
 
 # available commands
@@ -36,7 +28,7 @@ HISTORY = list()
 TRASH = list()
 
 print("initializing properties...")
-pm = PropertyManager("""Domains/domains.properties""")
+pm = PropertyManager("Domains/domains.properties")
 
 jbossHome = pm.getValue("jboss.home")
 controller = pm.getValue("controller")
@@ -73,7 +65,7 @@ while True:
         command = COMMANDS[COMMANDS.keys()[int(cmd)]]
         command.execute(jbossHome, controller, user, password)
 
-    except (KeyError,EapManagerException) as e:
+    except (KeyError, EapManagerException) as e:
         print("ERRORE nell'esecuzione del comando")
         print(e.message)
         pass

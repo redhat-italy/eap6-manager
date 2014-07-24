@@ -1,8 +1,10 @@
 #!/usr/bin/python
 import sys
 import time
-from Propertymanager import PropertyManager
-from StopInstanceCommand import StopInstanceCommand
+
+from utils.Propertymanager import PropertyManager
+from activecmd import StopInstanceCommand
+
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 

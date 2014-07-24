@@ -1,7 +1,9 @@
 #!/usr/bin/python
 import sys
-from Propertymanager import PropertyManager
-from StartInstanceCommand import StartInstanceCommand
+
+from utils.Propertymanager import PropertyManager
+from activecmd import StartInstanceCommand
+
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 

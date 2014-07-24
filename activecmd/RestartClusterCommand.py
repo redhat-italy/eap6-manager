@@ -1,9 +1,9 @@
-from EapManagerException import EapManagerException
+from base import BaseCommand
+from base import EapManagerException
+from utils import FindUtils
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
-from BaseCommand import BaseCommand
-from FindUtils import FindUtils
 import subprocess
 from subprocess import CalledProcessError
 from sys import stdout as console
@@ -29,7 +29,7 @@ class RestartClusterCommand(BaseCommand):
 
             subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,startCommand])
 
-        except (CalledProcessError,EapManagerException) as e:
+        except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 
