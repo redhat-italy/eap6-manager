@@ -1,13 +1,14 @@
 #!/usr/bin/python
+__author__ = "Samuele Dell'Angelo (Red Hat)"
 from activecmd import StartInstanceCommand, StopInstanceCommand, StartClusterCommand, DeployCommand, \
     RestartClusterCommand, InsertJvmOptClusterCommand, CreateInstanceCommand, InsertJvmOptCommand, \
-    RestartInstanceCommand, StopClusterCommand
+    RestartInstanceCommand, StopClusterCommand, DeployDrainCommand
 from base import EapManagerException
 from passivecmd import CheckThreadStatsCommand, CheckJgoupsMulticastRecCommand, CheckJgoupsMulticastSendCommand, \
     CheckHttpStatsCommand
 
 
-__author__ = "Samuele Dell'Angelo (Red Hat)"
+
 
 from utils.Propertymanager import PropertyManager
 from passivecmd.CheckDsCommand import CheckDSCommand
@@ -22,7 +23,7 @@ COMMANDS = { 'exit' : 'exit' , 'startCluster' : StartClusterCommand() , 'stopClu
              "insert JVM Options" : InsertJvmOptCommand(), "insert JVM Options per Cluster" : InsertJvmOptClusterCommand(),
              "check datasource statistics" : CheckDSStatsCommand(), "check thread stats" : CheckThreadStatsCommand(),
              "check http statistics" : CheckHttpStatsCommand(), "check Jgroups Receive" : CheckJgoupsMulticastRecCommand(),
-             "check jgroups Send" : CheckJgoupsMulticastSendCommand()}
+             "check jgroups Send" : CheckJgoupsMulticastSendCommand(), "Deploy Drain Mode" : DeployDrainCommand()}
 
 HISTORY = list()
 TRASH = list()

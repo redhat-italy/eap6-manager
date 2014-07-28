@@ -10,3 +10,4 @@ from StartClusterCommand import StartClusterCommand
 from StartInstanceCommand import StartInstanceCommand
 from StopClusterCommand import StopClusterCommand
 from StopInstanceCommand import StopInstanceCommand
+from DeployDrainCommand import DeployDrainCommand
