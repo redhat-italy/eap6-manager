@@ -39,7 +39,7 @@ class DeployDrainCommand(BaseCommand):
             appName = pm.getValue(appKey)
 
             #disable contexts
-            for i in range(hostNumb):
+            for i in range(int(hostNumb)):
                 instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i)+".instances").split(',')
                 for instance in instances:
                     disableCommand = "/host="+hostPrefix+str(i)+"/server="+instance+"/subsystem=modcluster:disable()"
