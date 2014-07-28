@@ -38,13 +38,22 @@ class DeployDrainCommand(BaseCommand):
 
             appName = pm.getValue(appKey)
 
+            #disable contexts
+            for i in range(hostNumb):
+                instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i)+".instances").split(',')
+                for instance in instances:
+                    disableCommand = "/host="+hostPrefix+str(i)+"/server="+instance+"/subsystem=modcluster:disable()"
+                    print(disableCommand)
+                    subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableCommand])
+
             #undeploy
             if(appName != None):
-                disableAppCommand="/server-group="+clusterB+"/deployment="+appName+":disable()"
                 subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableAppCommand])
                 undeployCommand="/server-group="+clusterB+"/deployment="+appName+":undeploy()"
+                print(undeployCommand)
                 subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,undeployCommand])
                 removeCommand="/deployment="+appName+":remove()"
+                print(removeCommand)
                 subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,removeCommand])
 
             #deploy
@@ -58,12 +67,7 @@ class DeployDrainCommand(BaseCommand):
                     subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,enableCommand])
 
 
-            #disable contexts
-            for i in range(hostNumb):
-                instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i)+".instances").split(',')
-                for instance in instances:
-                    disableCommand = "/host="+hostPrefix+str(i)+"/server="+instance+"/subsystem=modcluster:disable()"
-                    subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableCommand])
+
 
 
 
