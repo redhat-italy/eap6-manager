@@ -7,17 +7,16 @@ class PropertyManager:
     
     _propertyDict = dict()
     
-    def __init__(self, filename):
-        dir=os.path.dirname(__file__)
-        #remove package dir
-        dir=dir[:dir.find(__name__.split('.')[0])]
-        fpath=dir+"""/"""+filename
-        fp = open(fpath,'r')
-        splitLines = [string.split(line, '=') for line in fp.readlines() if "=" in line]
-        propertyNames = [tup[0] for tup in splitLines]
-        propertyList = map(lambda x: x[1].strip(), splitLines)
-        self._propertyDict = dict([(propertyNames[i],propertyList[i]) for i in range(len(splitLines))])
-        fp.close()
+    def __init__(self, filename = None):
+        if(filename != None):
+            dir = self.getRightDir()
+            fpath=dir+"""/"""+filename
+            fp = open(fpath,'r')
+            splitLines = [string.split(line, '=') for line in fp.readlines() if "=" in line]
+            propertyNames = [tup[0] for tup in splitLines]
+            propertyList = map(lambda x: x[1].strip(), splitLines)
+            self._propertyDict = dict([(propertyNames[i],propertyList[i]) for i in range(len(splitLines))])
+            fp.close()
         
     
     def test(self):
@@ -31,25 +30,25 @@ class PropertyManager:
         except:
             return None
 
-    @staticmethod
-    def create(filepath):
-        dir=os.path.dirname(__file__)
+
+    def create(self, filepath):
+        dir = self.getRightDir()
         fpath=dir+"""/"""+filepath
         fp = open(fpath,'w')
         fp.close()
 
-    @staticmethod
-    def writeValue(filename, key, value):
-        dir=os.path.dirname(__file__)
+
+    def writeValue(self, filename, key, value):
+        dir = self.getRightDir()
         fpath=dir+"""/"""+filename
         fp = open(fpath,'a')
         line = key+"="+value+"\n"
         fp.write(line)
         fp.close()
 
-    @staticmethod
-    def updateValue(filename, key, newValue):
-        dir=os.path.dirname(__file__)
+
+    def updateValue(self, filename, key, newValue):
+        dir = self.getRightDir()
         fpath=dir+"""/"""+filename
         fp = open(fpath,'r')
         lines = fp.readlines()
@@ -62,3 +61,9 @@ class PropertyManager:
 
         fpw.write(newline)
         fpw.close()
+
+    def getRightDir(self):
+        dir=os.path.dirname(__file__)
+        #remove package dir
+        dir=dir[:dir.find(__name__.split('.')[0])]
+        return dir

@@ -33,12 +33,15 @@ class DeployCommand(BaseCommand):
 
             subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl])
 
+            key="application."+domain+"."+cluster+".name"
+            fname = "Domains/"+domain+".properties"
+            pm = PropertyManager()
+            pm.writeValue(fname,key,pathTuple[1].strip())
+            raw_input("premere un tasto per continuare...")
+
         except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 
-        key="application."+domain+"."+cluster+".name"
-        fname = "Domains/"+domain+".properties"
-        PropertyManager.writeValue(fname,key,pathTuple[1].strip())
-        raw_input("premere un tasto per continuare...")
+
 

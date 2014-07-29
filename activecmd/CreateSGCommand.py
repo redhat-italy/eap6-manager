@@ -44,5 +44,5 @@ class CreateSGCommand(BaseCommand):
             new_clusters = cluster
         else:
             new_clusters = ValueUtils.addToValues(cluster, old_clusters, ',')
-        PropertyManager.updateValue("Domains/"+domain+".properties", "clusters", new_clusters)
+        pm.updateValue("Domains/"+domain+".properties", "clusters", new_clusters)
 

@@ -49,11 +49,11 @@ class CreateInstanceCommand(BaseCommand):
             newInstances = instance
         else:
             newInstances = ValueUtils.addToValues(instance, oldInstances, ',')
-        PropertyManager.updateValue("Domains/"+domain+".properties", "cluster."+cluster+".instances", newInstances)
+        pm.updateValue("Domains/"+domain+".properties", "cluster."+cluster+".instances", newInstances)
 
         oldHostInstances = pm.getValue("cluster."+cluster+"."+host+".instances")
         if(oldHostInstances == None):
             newHostInstances = instance
         else:
             newHostInstances = ValueUtils.addToValues(instance, oldHostInstances, ',')
-        PropertyManager.updateValue("Domains/"+domain+".properties", "cluster."+cluster+".instances", newHostInstances)
+        pm.updateValue("Domains/"+domain+".properties", "cluster."+cluster+".instances", newHostInstances)

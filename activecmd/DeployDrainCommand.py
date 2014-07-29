@@ -40,33 +40,41 @@ class DeployDrainCommand(BaseCommand):
 
             #disable contexts
             for i in range(int(hostNumb)):
-                instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i)+".instances").split(',')
+                print("cluster."+clusterA+"."+hostPrefix+str(i+1)+".instances")
+                instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i+1)+".instances").split(',')
                 for instance in instances:
-                    disableCommand = "/host="+hostPrefix+str(i)+"/server="+instance+"/subsystem=modcluster:disable()"
+                    disableCommand = "/host="+hostPrefix+str(i+1)+"/server="+instance+"/subsystem=modcluster:disable()"
                     print(disableCommand)
                     subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableCommand])
 
             #undeploy
             if(appName != None):
-                subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableAppCommand])
                 undeployCommand="/server-group="+clusterB+"/deployment="+appName+":undeploy()"
                 print(undeployCommand)
                 subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,undeployCommand])
+                removeSgCommand="/server-group="+clusterB+"/deployment="+appName+":remove()"
+                print(undeployCommand)
+                subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,removeSgCommand])
                 removeCommand="/deployment="+appName+":remove()"
                 print(removeCommand)
                 subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,removeCommand])
 
             #deploy
+            print(self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl)
             subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl])
 
             #enable contexts
-            for i in range(hostNumb):
-                instances = pm.getValue("cluster."+clusterB+"."+hostPrefix+str(i)+".instances").split(',')
+            for i in range(int(hostNumb)):
+                instances = pm.getValue("cluster."+clusterB+"."+hostPrefix+str(i+1)+".instances").split(',')
                 for instance in instances:
-                    enableCommand = "/host="+hostPrefix+str(i)+"/server="+instance+"/subsystem=modcluster:enable()"
+                    enableCommand = "/host="+hostPrefix+str(i+1)+"/server="+instance+"/subsystem=modcluster:enable()"
+                    print(enableCommand)
                     subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,enableCommand])
 
 
+            fname = "Domains/"+domain+".properties"
+            pm = PropertyManager()
+            pm.updateValue(fname,appKey,pathTuple[1].strip())
 
 
 
@@ -76,7 +84,5 @@ class DeployDrainCommand(BaseCommand):
             pass
 
 
-        fname = "Domains/"+domain+".properties"
-        PropertyManager.updateValue(fname,appKey,pathTuple[1].strip())
         raw_input("premere un tasto per continuare...")
 
