@@ -79,6 +79,7 @@ class FindUtils:
     def findPath():
         try:
             path = str(raw_input("inserire il path assoluto del file >"))
+            path.strip()
             if(os.path.isfile(path) != True or ((path.find("war") == -1) and (path.find("ear") == -1))):
                 raise EapManagerException("ERRORE: il percorso non punta a un file valido")
 
