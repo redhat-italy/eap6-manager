@@ -40,36 +40,6 @@ MONITORCOMMANDS = {"check datasource" : CheckDSCommand(), "check datasource stat
                    "check http statistics" : CheckHttpStatsCommand(), "check Jgroups Receive" : CheckJgoupsMulticastRecCommand(),
                    "check jgroups Send" : CheckJgoupsMulticastSendCommand()}
 
-menu_data = {
-    'title': "Program Launcher", 'type': MENU, 'subtitle': "Please select an option...",
-    'options':[
-        { 'title': "XBMC", 'type': COMMAND, 'command': 'xbmc' },
-        { 'title': "Emulation Station - Hit F4 to return to menu, Esc to exit game", 'type': COMMAND, 'command': 'emulationstation' },
-        { 'title': "Ur-Quan Masters", 'type': COMMAND, 'command': 'uqm' },
-        { 'title': "Dosbox Games", 'type': MENU, 'subtitle': "Please select an option...",
-          'options': [
-              { 'title': "Midnight Rescue", 'type': COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SSR/SSR.EXE -exit' },
-              { 'title': "Outnumbered", 'type': COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SSO/SSO.EXE -exit' },
-              { 'title': "Treasure Mountain", 'type': COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SST/SST.EXE -exit' },
-              ]
-        },
-        { 'title': "Pianobar", 'type': COMMAND, 'command': 'clear && pianobar' },
-        { 'title': "Windows 3.1", 'type': COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/WINDOWS/WIN.COM -conf /home/pi/scripts/dosbox2.conf -exit' },
-        { 'title': "Reboot", 'type': MENU, 'subtitle': "Select Yes to Reboot",
-          'options': [
-              {'title': "NO", 'type': EXITMENU, },
-              {'title': "", 'type': COMMAND, 'command': '' },
-              {'title': "", 'type': COMMAND, 'command': '' },
-              {'title': "", 'type': COMMAND, 'command': '' },
-              {'title': "YES", 'type': COMMAND, 'command': 'sudo shutdown -r -time now' },
-              {'title': "", 'type': COMMAND, 'command': '' },
-              {'title': "", 'type': COMMAND, 'command': '' },
-              {'title': "", 'type': COMMAND, 'command': '' },
-              ]
-        },
-
-        ]
-}
 
 
 

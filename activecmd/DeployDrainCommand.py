@@ -54,15 +54,6 @@ class DeployDrainCommand(BaseCommand):
             print(self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl)
             subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl])
 
-            #disable contexts
-            for i in range(int(hostNumb)):
-                print("cluster."+clusterA+"."+hostPrefix+str(i+1)+".instances")
-                instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i+1)+".instances").split(',')
-                for instance in instances:
-                    disableCommand = "/host="+hostPrefix+str(i+1)+"/server="+instance+"/subsystem=modcluster:disable()"
-                    print(disableCommand)
-                    subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableCommand])
-
             #enable contexts
             for i in range(int(hostNumb)):
                 instances = pm.getValue("cluster."+clusterB+"."+hostPrefix+str(i+1)+".instances").split(',')
@@ -71,6 +62,15 @@ class DeployDrainCommand(BaseCommand):
                     print(enableCommand)
                     subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,enableCommand])
 
+
+            #disable contexts
+            for i in range(int(hostNumb)):
+                print("cluster."+clusterA+"."+hostPrefix+str(i+1)+".instances")
+                instances = pm.getValue("cluster."+clusterA+"."+hostPrefix+str(i+1)+".instances").split(',')
+                for instance in instances:
+                    disableCommand = "/host="+hostPrefix+str(i+1)+"/server="+instance+"/subsystem=modcluster:disable()"
+                    print(disableCommand)
+                    subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,disableCommand])
 
             fname = "Domains/"+domain+".properties"
             pm = PropertyManager()
