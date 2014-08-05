@@ -63,7 +63,7 @@ class FindUtils:
             hostsuffix = singleprops.getValue("host.suffix")
 
             for i in range(hostNumb):
-                propKey="cluster."+cluster+"."+[hostPrefix if hostPrefix != None else ""]+str(i+1)+[hostsuffix if hostsuffix != None else ""]+"."+"instances"
+                propKey="cluster."+cluster+"."+(hostPrefix if hostPrefix != None else "")+str(i+1)+(hostsuffix if hostsuffix != None else "")+"."+"instances"
                 if (str(singleprops.getValue(propKey)) == instances[insts]):
                     host = hostPrefix+str(i+1)
                     print(host)

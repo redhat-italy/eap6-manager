@@ -29,6 +29,7 @@ class CheckDSStatsCommand(BaseCommand):
             pollInterval =  FindUtils.getGenericString("inserire il polling interval (sec) >")
             print("Check Datasource Statistics: "+datasource)
             startCommand ='"/host='+instanceTuple[1]+'/server='+instanceTuple[0]+'/subsystem=datasources/data-source='+datasource+'/statistics=pool:read-resource(include-runtime=true)"'
+            print(startCommand)
             if(pollInterval != None) and (pollNumb != None):
 
                 pollNumb = int(pollNumb)
@@ -41,6 +42,10 @@ class CheckDSStatsCommand(BaseCommand):
                     psCons.wait()
 
                     statsDict = ValueUtils.parseCliOutput(output)
+
+                    if("outcome" not in statsDict) and (statsDict['outcome'] != "success"):
+                        raise EapManagerException("Datasource stats collection failed")
+
 
                     print(statsDict['AvailableCount']+" "+
                           "                   |"+statsDict['CreatedCount']+" "+
