@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import sys
 
-from utils.Propertymanager import PropertyManager
+from utils.PropertyManager import PropertyManager
 from activecmd import StartInstanceCommand
 
 

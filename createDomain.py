@@ -4,7 +4,7 @@ import os
 import sys
 from copy import deepcopy
 
-from Propertymanager import PropertyManager
+from PropertyManager import PropertyManager
 from utils import ValueUtils
 
 

@@ -2,7 +2,7 @@
 import sys
 import time
 
-from utils.Propertymanager import PropertyManager
+from utils import PropertyManager
 from activecmd import StopInstanceCommand
 
 
