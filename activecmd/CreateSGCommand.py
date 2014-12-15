@@ -21,9 +21,10 @@ class CreateSGCommand(BaseCommand):
             domain = FindUtils.getDomain("domains")
             profile = FindUtils.getGenericString("inserire il nome del profilo>")
             cluster = FindUtils.getGenericString("inserire il nome del cluster>")
+            sbgroup = FindUtils.getGenericString("inserire il nome del socket binding group>")
 
             print("Creo cluster: "+cluster)
-            self.sendCommand(jbossHome,controller,user,password,cluster, domain, profile)
+            self.sendCommand(jbossHome,controller,user,password,cluster, sbgroup, domain, profile)
 
         except (CalledProcessError, EapManagerException) as e:
             print(e.message)
@@ -31,9 +32,9 @@ class CreateSGCommand(BaseCommand):
 
         raw_input("premere un tasto per continuare...")
 
-    def sendCommand(self, jbossHome, controller, user, password, cluster, domain, profile):
+    def sendCommand(self, jbossHome, controller, user, password, cluster, sbgroup, domain, profile):
         self.fillParameters(jbossHome, controller, user, password)
-        startCommand =  "/server-group="+cluster+":add(profile="+profile+",socket-binding-group=full-ha-sockets)"
+        startCommand =  "/server-group="+cluster+":add(profile="+profile+",socket-binding-group="+sbgroup+")"
 
         print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+startCommand)
 

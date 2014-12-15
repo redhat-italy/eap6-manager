@@ -23,7 +23,7 @@ class CreateInstanceCommand(BaseCommand):
             cluster = FindUtils.getCluster(domain)
             hostcontroller = FindUtils.getGenericString("host controller dovre creare l'istanza>")
             instanceName = FindUtils.getGenericString("nome istanza>")
-            offset = FindUtils.getGenericString("port ofsset>")
+            offset = FindUtils.getGenericString("port offset>")
 
             print("Creo Istanza: "+instanceName)
             self.sendCommand(jbossHome,controller,user,password, domain, cluster,hostcontroller,instanceName,offset)
@@ -56,4 +56,4 @@ class CreateInstanceCommand(BaseCommand):
             newHostInstances = instance
         else:
             newHostInstances = ValueUtils.addToValues(instance, oldHostInstances, ',')
-        pm.updateValue("Domains/"+domain+".properties", "cluster."+cluster+".instances", newHostInstances)
+        pm.updateValue("Domains/"+domain+".properties", "cluster."+cluster+"."+host+".instances", newHostInstances)

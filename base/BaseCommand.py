@@ -9,6 +9,7 @@ class BaseCommand:
     _cliuser = "--user="
     _clipwd = "--password="
     _clisg = "--server-groups="
+    _clirname = "--runtime-name="
     _cliname = "--name="
 
     #write vars

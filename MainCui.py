@@ -5,6 +5,7 @@ from activecmd import DeployCommand, DeployDrainCommand, StartClusterCommand, St
 from passivecmd import CheckDSCommand, CheckDSStatsCommand, CheckThreadStatsCommand, CheckHttpStatsCommand, \
     CheckJgoupsMulticastRecCommand, CheckJgoupsMulticastSendCommand
 from utils.Propertymanager import PropertyManager
+import sys
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
@@ -26,6 +27,18 @@ screen.keypad(1) # Capture input from keypad
 curses.init_pair(1,curses.COLOR_BLACK, curses.COLOR_WHITE) # Sets up color pair #1, it does black text with white background
 h = curses.color_pair(1) #h is the coloring for a highlighted menu option
 n = curses.A_NORMAL #n is the coloring for a non highlighted menu option
+
+# substitute the stdout with the unbuffered version
+class Unbuffered(object):
+    def __init__(self, stream):
+        self.stream = stream
+    def write(self, data):
+        self.stream.write(data)
+        self.stream.flush()
+    def __getattr__(self, attr):
+        return getattr(self.stream, attr)
+
+sys.stdout = Unbuffered(sys.stdout)
 
 MENU = "menu"
 COMMAND = "command"
