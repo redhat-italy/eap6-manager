@@ -4,7 +4,7 @@ from utils import FindUtils
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
 
-from utils.Propertymanager import PropertyManager
+from utils.PropertyManager import PropertyManager
 import subprocess
 from subprocess import CalledProcessError
 from sys import stdout as console

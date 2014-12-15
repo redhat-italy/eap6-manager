@@ -10,7 +10,7 @@ from passivecmd import CheckThreadStatsCommand, CheckJgoupsMulticastRecCommand, 
 
 
 
-from utils.Propertymanager import PropertyManager
+from utils.PropertyManager import PropertyManager
 from passivecmd.CheckDsCommand import CheckDSCommand
 from activecmd.CreateSGCommand import CreateSGCommand
 from passivecmd.CheckDsStatsCommand import CheckDSStatsCommand

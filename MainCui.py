@@ -4,7 +4,7 @@ from activecmd import DeployCommand, DeployDrainCommand, StartClusterCommand, St
     InsertJvmOptCommand, InsertJvmOptClusterCommand
 from passivecmd import CheckDSCommand, CheckDSStatsCommand, CheckThreadStatsCommand, CheckHttpStatsCommand, \
     CheckJgoupsMulticastRecCommand, CheckJgoupsMulticastSendCommand
-from utils.Propertymanager import PropertyManager
+from utils.PropertyManager import PropertyManager
 import sys
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"

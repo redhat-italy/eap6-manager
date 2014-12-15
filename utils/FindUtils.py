@@ -1,7 +1,7 @@
 import os.path
 
 from base import EapManagerException
-from utils.Propertymanager import PropertyManager
+from utils.PropertyManager import PropertyManager
 
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"

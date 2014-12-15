@@ -7,7 +7,7 @@ __author__ = "Samuele Dell'Angelo (Red Hat)"
 from sys import stdout as console
 import subprocess
 from subprocess import CalledProcessError
-from utils.Propertymanager import PropertyManager
+from utils.PropertyManager import PropertyManager
 
 
 class CreateInstanceCommand(BaseCommand):
