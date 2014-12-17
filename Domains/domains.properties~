@@ -1,9 +1,0 @@
-jboss.home=/opt/jboss-eap-6.2/
-controller=127.0.0.1
-user=jboss
-password=adminadmin1!
-host.controller.jboss.home=
-domain.controller.jboss.home=
-domains=test
-java.home=/usr/java/jdk1.7.0_21/
-

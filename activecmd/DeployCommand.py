@@ -13,7 +13,6 @@ from sys import stdout as console
 class DeployCommand(BaseCommand):
 
     def execute(self, jbossHome, controller, user, password):
-        self.fillParameters(jbossHome, controller, user, password)
         print chr(27) + "[2J"
         console.flush()
         print("hai chiamato deploy")
@@ -24,14 +23,7 @@ class DeployCommand(BaseCommand):
             pathTuple = FindUtils.findPath()
 
             print("Avvio cluster: "+cluster)
-
-            deployCommand =  'deploy'
-            sgCompl=self._clisg+cluster
-            nameCompl=self._cliname+pathTuple[1]
-
-            print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl)
-
-            subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,deployCommand+" "+pathTuple[0]+" "+sgCompl+" "+nameCompl])
+            self.sendCommand(jbossHome, controller, user, password, pathTuple[0], cluster, pathTuple[1])
 
             key="application."+domain+"."+cluster+".name"
             fname = "Domains/"+domain+".properties"
@@ -43,5 +35,12 @@ class DeployCommand(BaseCommand):
             print(e.message)
             pass
 
+
+    def sendCommand(self, jbossHome, controller, user, password, path, cluster, name):
+        self.fillParameters(jbossHome, controller, user, password)
+        deployCommand = 'deploy'+" "+ path +" " + self._clisg + cluster +" "+ self._cliname + name
+        print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+deployCommand)
+
+        subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,deployCommand])
 
 

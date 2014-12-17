@@ -12,7 +12,6 @@ from sys import stdout as console
 class RestartClusterCommand(BaseCommand):
 
     def execute(self, jbossHome, controller, user, password):
-        self.fillParameters(jbossHome, controller, user, password)
         print chr(27) + "[2J"
         console.flush()
         print("hai chiamato restartCluster")
@@ -22,15 +21,19 @@ class RestartClusterCommand(BaseCommand):
             cluster = FindUtils.getCluster(domain)
 
             print("Avvio cluster: "+cluster)
-
-            startCommand = "/server-group="+cluster+":restart-servers"
-
-            print("eseguo: "+self._complPath + " " + self._cliconn + " " + self._complContr + " " + self._complUser + " " + self._complPwd + " " + startCommand)
-
-            subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,startCommand])
+            self.sendCommand(jbossHome,controller,user,password,cluster)
 
         except (CalledProcessError, EapManagerException) as e:
             print(e.message)
             pass
 
         raw_input("premere un tasto per continuare...")
+
+    def sendCommand(self, jbossHome, controller, user, password, cluster):
+        self.fillParameters(jbossHome, controller, user, password)
+        startCommand = "/server-group="+cluster+":restart-servers"
+
+        print("eseguo: "+self._complPath + " " + self._cliconn + " " + self._complContr + " " + self._complUser + " " + self._complPwd + " " + startCommand)
+
+        subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,startCommand])
+
