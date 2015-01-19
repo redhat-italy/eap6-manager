@@ -8,6 +8,7 @@ from utils import FindUtils
 
 
 __author__ = "Samuele Dell'Angelo (Red HAt)"
+__author__ = "Andrea Battaglia (Red Hat)"
 
 class InsertJvmOptClusterCommand(BaseCommand):
     _prompt = "insertOption >"
@@ -34,8 +35,8 @@ class InsertJvmOptClusterCommand(BaseCommand):
 
     def sendCommand(self, jbossHome, controller, user, password, cluster, option):
         self.fillParameters(jbossHome, controller, user, password)
-        checkJvmCommand =  "/server-group="+cluster+"/jvm="+cluster+"jvm:read-resource"
-        createJvmCommand = "/server-group="+cluster+"/jvm="+cluster+"jvm:add"
+        checkJvmCommand =  self._clisg+cluster+"/jvm="+cluster+"jvm:read-resource"
+        createJvmCommand = self._clisg+cluster+"/jvm="+cluster+"jvm:add"
         insertOptionCommand = '/server-group='+cluster+'/jvm='+cluster+'jvm:add-jvm-option(jvm-option="'+option+'")'
 
         print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+checkJvmCommand)

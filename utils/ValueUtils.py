@@ -1,4 +1,5 @@
 __author__ = "Samuele Dell'Angelo"
+__author__ = "Andrea Battaglia (Red Hat)"
 
 import string
 
@@ -22,4 +23,10 @@ class ValueUtils:
         statsDict = dict([(propertyNames[i],propertyList[i]) for i in range(len(splitLines))])
 
         return statsDict
+
+    @staticmethod
+    def parseDeploymentList(output):
+        splittedOut = output.strip().split('\n')
+
+        return splittedOut
 

@@ -3,6 +3,7 @@ from base import EapManagerException
 from utils import FindUtils
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
+__author__ = "Andrea Battaglia (Red Hat)"
 
 import subprocess
 from subprocess import CalledProcessError
@@ -31,7 +32,7 @@ class RestartClusterCommand(BaseCommand):
 
     def sendCommand(self, jbossHome, controller, user, password, cluster):
         self.fillParameters(jbossHome, controller, user, password)
-        startCommand = "/server-group="+cluster+":restart-servers"
+        startCommand = self._clisg+cluster+":restart-servers"
 
         print("eseguo: "+self._complPath + " " + self._cliconn + " " + self._complContr + " " + self._complUser + " " + self._complPwd + " " + startCommand)
 

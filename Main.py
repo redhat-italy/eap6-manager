@@ -1,5 +1,6 @@
 #!/usr/bin/python
 __author__ = "Samuele Dell'Angelo (Red Hat)"
+__author__ = "Andrea Battaglia (Red Hat)"
 from activecmd import StartInstanceCommand, StopInstanceCommand, StartClusterCommand, DeployCommand, \
     RestartClusterCommand, InsertJvmOptClusterCommand, CreateInstanceCommand, InsertJvmOptCommand, \
     RestartInstanceCommand, StopClusterCommand, DeployDrainCommand

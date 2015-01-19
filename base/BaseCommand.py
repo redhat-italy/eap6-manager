@@ -1,4 +1,5 @@
 __author__ = "Samuele Dell'Angelo (Red Hat)"
+__author__ = "Andrea Battaglia (Red Hat)"
 
 class BaseCommand:
 
@@ -8,7 +9,9 @@ class BaseCommand:
     _clicontr = "--controller="
     _cliuser = "--user="
     _clipwd = "--password="
-    _clisg = "--server-groups="
+    _clisg = "/server-group="
+    _clidpmt = "/deployment="
+    _clisgs = "--server-groups="
     _clirname = "--runtime-name="
     _cliname = "--name="
 

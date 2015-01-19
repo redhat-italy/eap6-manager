@@ -1,13 +1,17 @@
+from subprocess import CalledProcessError
+import subprocess
+from sys import stdout as console
+
 from base import BaseCommand
 from base import EapManagerException
 from utils import FindUtils
+from utils.PropertyManager import PropertyManager
+from utils.ValueUtils import ValueUtils
+
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
+__author__ = "Andrea Battaglia (Red Hat)"
 
-from utils.PropertyManager import PropertyManager
-import subprocess
-from subprocess import CalledProcessError
-from sys import stdout as console
 
 
 class DeployCommand(BaseCommand):
@@ -35,12 +39,37 @@ class DeployCommand(BaseCommand):
             print(e.message)
             pass
 
-
     def sendCommand(self, jbossHome, controller, user, password, path, cluster, name):
         self.fillParameters(jbossHome, controller, user, password)
-        deployCommand = 'deploy'+" "+ path +" " + self._clisg + cluster +" "+ self._cliname + name
+        
+        #list deployments
+        listDeploymentsCommand='ls'+" "+ self._clisg + cluster+'/deployment'
+        print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+listDeploymentsCommand)
+        output = subprocess.Popen([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,listDeploymentsCommand], stdout=subprocess.PIPE ).communicate()[0]
+
+        deploymentList = ValueUtils.parseDeploymentList(output)
+
+        if(name in deploymentList):
+            #undeploy
+            undeployCommand=self._clisg+cluster+self._clidpmt+name+":undeploy()"
+            print(undeployCommand)
+            subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,undeployCommand])
+            removeSgCommand=self._clisg+cluster+self._clidpmt+name+":remove()"
+            print(undeployCommand)
+            subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,removeSgCommand])
+            removeCommand=self._clidpmt+name+":remove()"
+            print(removeCommand)
+            subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,removeCommand])
+        
+        
+        #deploy
+        deployCommand = 'deploy'+" "+ path +" " + self._clisgs + cluster +" "+ self._cliname + name
         print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+deployCommand)
 
         subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,deployCommand])
 
+        #restart
+        startCommand = self._clisg+cluster+":restart-servers"
+        print("eseguo: "+self._complPath + " " + self._cliconn + " " + self._complContr + " " + self._complUser + " " + self._complPwd + " " + startCommand)
 
+        subprocess.check_call([self._complPath,self._cliconn,self._complContr,self._complUser,self._complPwd,startCommand])

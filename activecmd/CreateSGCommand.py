@@ -3,6 +3,7 @@ from base import EapManagerException
 from utils import ValueUtils, FindUtils
 
 __author__ = "Samuele Dell'Angelo (Red Hat)"
+__author__ = "Andrea Battaglia (Red Hat)"
 
 import subprocess
 from subprocess import CalledProcessError
@@ -34,7 +35,7 @@ class CreateSGCommand(BaseCommand):
 
     def sendCommand(self, jbossHome, controller, user, password, cluster, sbgroup, domain, profile):
         self.fillParameters(jbossHome, controller, user, password)
-        startCommand =  "/server-group="+cluster+":add(profile="+profile+",socket-binding-group="+sbgroup+")"
+        startCommand =  self._clisg+cluster+":add(profile="+profile+",socket-binding-group="+sbgroup+")"
 
         print("eseguo: "+self._complPath+" "+self._cliconn+" "+self._complContr+" "+self._complUser+" "+self._complPwd+" "+startCommand)
 
